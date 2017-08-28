@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="73afb52f296f4ef6b2793a40b119c924" Name="Diagram1" ZoomLevel="62">
+        <EntityTypeShape EntityType="ImprestModel.AccountMaster" Width="1.5" PointX="6" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ImprestModel.AccountStatement" Width="1.5" PointX="8.75" PointY="2" IsExpanded="true" />
+        <EntityTypeShape EntityType="ImprestModel.AccountStatementMaster" Width="1.5" PointX="11" PointY="2.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="ImprestModel.AccountTransaction" Width="1.5" PointX="8.25" PointY="14" IsExpanded="true" />
+        <EntityTypeShape EntityType="ImprestModel.BreakUpTransaction" Width="1.5" PointX="0.75" PointY="1.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="ImprestModel.BRSTransaction" Width="1.5" PointX="5.25" PointY="8.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="ImprestModel.ChequeNotDeposited" Width="1.5" PointX="5.25" PointY="10.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="ImprestModel.ChequeTransaction" Width="1.5" PointX="5.25" PointY="13.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="ImprestModel.ClaimNotSubmittedTransaction" Width="1.5" PointX="5.25" PointY="15.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ImprestModel.DeletedBreakUpNo" Width="1.5" PointX="2.75" PointY="1.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="ImprestModel.DeletedTransactionNO" Width="1.5" PointX="2.75" PointY="3.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="ImprestModel.NarrationTransaction" Width="1.5" PointX="5.25" PointY="18.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="ImprestModel.ProjectTransaction" Width="1.5" PointX="5.25" PointY="20.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="ImprestModel.RecoupmentTransaction" Width="1.5" PointX="5.25" PointY="23" IsExpanded="true" />
+        <EntityTypeShape EntityType="ImprestModel.SupplierMaster" Width="1.5" PointX="6" PointY="5" IsExpanded="true" />
+        <EntityTypeShape EntityType="ImprestModel.SupplierTransaction" Width="1.5" PointX="8.25" PointY="11" IsExpanded="true" />
+        <EntityTypeShape EntityType="ImprestModel.TransactionMaster" Width="1.5" PointX="3" PointY="12.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ImprestModel.VoucherDateTransaction" Width="1.5" PointX="5.25" PointY="28.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="ImprestModel.VoucherType" Width="1.5" PointX="0.75" PointY="14.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="ImprestModel.AccountStatementView" Width="1.5" PointX="0.75" PointY="8.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="ImprestModel.TransactionReport" Width="1.5" PointX="10.75" PointY="5.875" IsExpanded="true" />
+        <AssociationConnector Association="ImprestModel.FK_dbo_AccountTransaction_dbo_AccountMaster_AccountNo" ManuallyRouted="false" />
+        <AssociationConnector Association="ImprestModel.FK_dbo_AccountStatementMaster_dbo_AccountStatement_AccountTran" ManuallyRouted="false" />
+        <AssociationConnector Association="ImprestModel.FK_dbo_AccountTransaction_dbo_TransactionMaster_TransactionNo" ManuallyRouted="false" />
+        <AssociationConnector Association="ImprestModel.FK_dbo_BRSTransaction_dbo_TransactionMaster_TransactionNo" ManuallyRouted="false" />
+        <AssociationConnector Association="ImprestModel.Fk_TransactionNo_TransactionMaster_TransactionNo" ManuallyRouted="false" />
+        <AssociationConnector Association="ImprestModel.FK_dbo_ChequeTransactions_dbo_TransactionMaster_TransactionNo" ManuallyRouted="false" />
+        <AssociationConnector Association="ImprestModel.FK_ClaimNotSubmittedTransaction_TransactionNo_TransactionMaster_TransactionNo" ManuallyRouted="false" />
+        <AssociationConnector Association="ImprestModel.FK_dbo_NarrationTransaction_dbo_TransactionMaster_TransactionNo" ManuallyRouted="false" />
+        <AssociationConnector Association="ImprestModel.FK_dbo_ProjectTransaction_dbo_TransactionMaster_TransactionNo" ManuallyRouted="false" />
+        <AssociationConnector Association="ImprestModel.FK_dbo_RecoupmentTransaction_dbo_TransactionMaster_TransactionNo" ManuallyRouted="false" />
+        <AssociationConnector Association="ImprestModel.FK_dbo_SupplierTransaction_dbo_SupplierMasters_SupplierId" ManuallyRouted="false" />
+        <AssociationConnector Association="ImprestModel.FK_dbo_SupplierTransaction_dbo_TransactionMaster_TransactionNo" ManuallyRouted="false" />
+        <AssociationConnector Association="ImprestModel.FK_dbo_TransactionMaster_dbo_VoucherType_voucherId" ManuallyRouted="false" />
+        <AssociationConnector Association="ImprestModel.FK_dbo_VoucherDateTransactions_dbo_TransactionMaster_TransactionNo" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="ImprestModel.OpenCloseBalance" Width="1.5" PointX="7.375" PointY="7.75" />
+        <EntityTypeShape EntityType="ImprestModel.ComputeOpenCloseBal" Width="1.5" PointX="10.375" PointY="11.75" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

@@ -1,0 +1,1343 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="ImprestModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="AccountMaster">
+          <Key>
+            <PropertyRef Name="AccountNo" />
+          </Key>
+          <Property Name="AccountNo" Type="nvarchar" MaxLength="13" Nullable="false" />
+          <Property Name="InstId" Type="nvarchar(max)" />
+          <Property Name="Name" Type="nvarchar(max)" />
+          <Property Name="CustId" Type="nvarchar(max)" />
+          <Property Name="CardNo" Type="nvarchar(max)" />
+          <Property Name="Email" Type="nvarchar(max)" />
+          <Property Name="Amount" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+        </EntityType>
+        <EntityType Name="AccountStatement">
+          <Key>
+            <PropertyRef Name="AccountTran" />
+          </Key>
+          <Property Name="AccountTran" Type="nvarchar" MaxLength="16" Nullable="false" />
+          <Property Name="PostingDate" Type="datetime" Nullable="false" />
+          <Property Name="ValueDate" Type="datetime" Nullable="false" />
+          <Property Name="Branch" Type="nvarchar" MaxLength="4" />
+          <Property Name="Descript" Type="nvarchar" MaxLength="250" />
+          <Property Name="RefChqN0" Type="nvarchar" MaxLength="12" />
+          <Property Name="WithDrawals" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="Deposit" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="Balance" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="used" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="AccountStatementMaster">
+          <Key>
+            <PropertyRef Name="AccountNo" />
+            <PropertyRef Name="AccountTran" />
+          </Key>
+          <Property Name="AccountNo" Type="nvarchar" MaxLength="13" Nullable="false" />
+          <Property Name="AccountTran" Type="nvarchar" MaxLength="16" Nullable="false" />
+        </EntityType>
+        <EntityType Name="AccountTransaction">
+          <Key>
+            <PropertyRef Name="TransactionNo" />
+            <PropertyRef Name="AccountNo" />
+          </Key>
+          <Property Name="TransactionNo" Type="nvarchar" MaxLength="25" Nullable="false" />
+          <Property Name="AccountNo" Type="nvarchar" MaxLength="13" Nullable="false" />
+          <Property Name="CreatedOn" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="BreakUpTransaction">
+          <Key>
+            <PropertyRef Name="TransactionNo" />
+            <PropertyRef Name="BreakUpNo" />
+          </Key>
+          <Property Name="TransactionNo" Type="nvarchar" MaxLength="25" Nullable="false" />
+          <Property Name="BreakUpNo" Type="int" Nullable="false" />
+          <Property Name="VoucherNo" Type="nvarchar" MaxLength="8" />
+          <Property Name="CommitmentNo" Type="nvarchar" MaxLength="12" />
+          <Property Name="ProjectNo" Type="nvarchar" MaxLength="23" />
+          <Property Name="ProjectType" Type="int" />
+          <Property Name="Amount" Type="decimal" Precision="18" Scale="4" Nullable="false" />
+        </EntityType>
+        <EntityType Name="BRSTransaction">
+          <Key>
+            <PropertyRef Name="TransactionNo" />
+            <PropertyRef Name="BrsDone" />
+          </Key>
+          <Property Name="TransactionNo" Type="nvarchar" MaxLength="25" Nullable="false" />
+          <Property Name="BrsDone" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ChequeNotDeposited">
+          <Key>
+            <PropertyRef Name="TransactionNo" />
+            <PropertyRef Name="NotDeposited" />
+          </Key>
+          <Property Name="TransactionNo" Type="nvarchar" MaxLength="25" Nullable="false" />
+          <Property Name="NotDeposited" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ChequeTransactions">
+          <Key>
+            <PropertyRef Name="TransactionNo" />
+          </Key>
+          <Property Name="TransactionNo" Type="nvarchar" MaxLength="25" Nullable="false" />
+          <Property Name="ChequeNo" Type="nvarchar" MaxLength="16" />
+          <Property Name="ChequeDate" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ClaimNotSubmittedTransaction">
+          <Key>
+            <PropertyRef Name="TransactionNo" />
+            <PropertyRef Name="ClaimNotSubmitted" />
+          </Key>
+          <Property Name="TransactionNo" Type="nvarchar" MaxLength="25" Nullable="false" />
+          <Property Name="ClaimNotSubmitted" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ComputeOpenCloseBal">
+          <Key>
+            <PropertyRef Name="AccountNo" />
+          </Key>
+          <Property Name="AccountNo" Type="nvarchar" MaxLength="13" Nullable="false" />
+          <Property Name="Trandate" Type="datetime" Nullable="false" />
+          <Property Name="Checked" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="DeletedBreakUpNo">
+          <Key>
+            <PropertyRef Name="BreakUpNo" />
+          </Key>
+          <Property Name="BreakUpNo" Type="nvarchar" MaxLength="25" Nullable="false" />
+        </EntityType>
+        <EntityType Name="DeletedTransactionNO">
+          <Key>
+            <PropertyRef Name="TransactionNo" />
+          </Key>
+          <Property Name="TransactionNo" Type="nvarchar" MaxLength="25" Nullable="false" />
+        </EntityType>
+        <EntityType Name="NarrationTransaction">
+          <Key>
+            <PropertyRef Name="TransactionNo" />
+          </Key>
+          <Property Name="TransactionNo" Type="nvarchar" MaxLength="25" Nullable="false" />
+          <Property Name="Narration" Type="nvarchar" MaxLength="250" />
+        </EntityType>
+        <EntityType Name="OpenCloseBalance">
+          <Key>
+            <PropertyRef Name="AccountNo" />
+            <PropertyRef Name="TranDate" />
+          </Key>
+          <Property Name="AccountNo" Type="nvarchar" MaxLength="13" Nullable="false" />
+          <Property Name="TranDate" Type="datetime" Nullable="false" />
+          <Property Name="OpeningBalance" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="closingBalance" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ProjectTransaction">
+          <Key>
+            <PropertyRef Name="TransactionNo" />
+            <PropertyRef Name="ProjectNo" />
+            <PropertyRef Name="ProjectType" />
+          </Key>
+          <Property Name="TransactionNo" Type="nvarchar" MaxLength="25" Nullable="false" />
+          <Property Name="ProjectNo" Type="nvarchar" MaxLength="22" Nullable="false" />
+          <Property Name="ProjectType" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="RecoupmentTransaction">
+          <Key>
+            <PropertyRef Name="TransactionNo" />
+          </Key>
+          <Property Name="TransactionNo" Type="nvarchar" MaxLength="25" Nullable="false" />
+          <Property Name="RecoupmentId" Type="nvarchar" MaxLength="25" />
+        </EntityType>
+        <EntityType Name="SupplierMasters">
+          <Key>
+            <PropertyRef Name="SupplierName" />
+          </Key>
+          <Property Name="SupplierName" Type="nvarchar" MaxLength="80" Nullable="false" />
+          <Property Name="TIN" Type="nvarchar" MaxLength="15" />
+          <Property Name="TAN" Type="nvarchar" MaxLength="15" />
+          <Property Name="PAN" Type="nvarchar" MaxLength="15" />
+        </EntityType>
+        <EntityType Name="SupplierTransaction">
+          <Key>
+            <PropertyRef Name="TransactionNo" />
+          </Key>
+          <Property Name="TransactionNo" Type="nvarchar" MaxLength="25" Nullable="false" />
+          <Property Name="SupplierName" Type="nvarchar" MaxLength="80" Nullable="false" />
+          <Property Name="CreatedOn" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="TransactionMaster">
+          <Key>
+            <PropertyRef Name="TransactionNo" />
+          </Key>
+          <Property Name="TransactionNo" Type="nvarchar" MaxLength="25" Nullable="false" />
+          <Property Name="Amount" Type="decimal" Precision="13" Scale="2" Nullable="false" />
+          <Property Name="credit" Type="bit" Nullable="false" />
+          <Property Name="voucherId" Type="int" Nullable="false" />
+          <Property Name="CreatedOn" Type="datetime" Nullable="false" />
+          <Property Name="UpdatedOn" Type="datetime" Nullable="false" />
+          <Property Name="UserId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="VoucherDateTransactions">
+          <Key>
+            <PropertyRef Name="TransactionNo" />
+            <PropertyRef Name="VoucherDate" />
+          </Key>
+          <Property Name="TransactionNo" Type="nvarchar" MaxLength="25" Nullable="false" />
+          <Property Name="VoucherDate" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="VoucherType">
+          <Key>
+            <PropertyRef Name="voucherId" />
+          </Key>
+          <Property Name="voucherId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="voucherType" Type="nvarchar" MaxLength="20" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'Imprest.dbo.AccountStatementView' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="AccountStatementView">
+          <Key>
+            <PropertyRef Name="AccountTran" />
+            <PropertyRef Name="PostingDate" />
+            <PropertyRef Name="ValueDate" />
+            <PropertyRef Name="WithDrawals" />
+            <PropertyRef Name="Deposit" />
+            <PropertyRef Name="Balance" />
+            <PropertyRef Name="AccountNo" />
+            <PropertyRef Name="used" />
+          </Key>
+          <Property Name="AccountTran" Type="nvarchar" MaxLength="16" Nullable="false" />
+          <Property Name="PostingDate" Type="datetime" Nullable="false" />
+          <Property Name="ValueDate" Type="datetime" Nullable="false" />
+          <Property Name="Branch" Type="nvarchar" MaxLength="4" />
+          <Property Name="Descript" Type="nvarchar" MaxLength="250" />
+          <Property Name="RefChqN0" Type="nvarchar" MaxLength="12" />
+          <Property Name="WithDrawals" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="Deposit" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="Balance" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="AccountNo" Type="nvarchar" MaxLength="13" Nullable="false" />
+          <Property Name="used" Type="bit" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'Imprest.dbo.TransactionReport' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="TransactionReport">
+          <Key>
+            <PropertyRef Name="TransactionNo" />
+            <PropertyRef Name="credit" />
+            <PropertyRef Name="BrsDone" />
+            <PropertyRef Name="VoucherDate" />
+            <PropertyRef Name="AccountNo" />
+            <PropertyRef Name="NotDeposited" />
+            <PropertyRef Name="VoucherIdInt" />
+          </Key>
+          <Property Name="TransactionNo" Type="nvarchar" MaxLength="25" Nullable="false" />
+          <Property Name="Amount" Type="decimal" Precision="13" Scale="2" />
+          <Property Name="credit" Type="bit" Nullable="false" />
+          <Property Name="voucherType" Type="nvarchar" MaxLength="20" />
+          <Property Name="CreatedOn" Type="datetime" />
+          <Property Name="UpdatedOn" Type="datetime" />
+          <Property Name="UserId" Type="int" />
+          <Property Name="BrsDone" Type="bit" Nullable="false" />
+          <Property Name="ChequeNo" Type="nvarchar" MaxLength="16" />
+          <Property Name="ChequeDate" Type="datetime" />
+          <Property Name="Narration" Type="nvarchar" MaxLength="250" />
+          <Property Name="ProjectNo" Type="nvarchar" MaxLength="22" />
+          <Property Name="ProjectType" Type="int" />
+          <Property Name="SupplierName" Type="nvarchar" MaxLength="80" />
+          <Property Name="VoucherDate" Type="datetime" Nullable="false" />
+          <Property Name="AccountNo" Type="nvarchar" MaxLength="13" Nullable="false" />
+          <Property Name="NotDeposited" Type="bit" Nullable="false" />
+          <Property Name="VoucherIdInt" Type="int" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_ClaimNotSubmittedTransaction_TransactionNo_TransactionMaster_TransactionNo">
+          <End Role="TransactionMaster" Type="Self.TransactionMaster" Multiplicity="1" />
+          <End Role="ClaimNotSubmittedTransaction" Type="Self.ClaimNotSubmittedTransaction" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TransactionMaster">
+              <PropertyRef Name="TransactionNo" />
+            </Principal>
+            <Dependent Role="ClaimNotSubmittedTransaction">
+              <PropertyRef Name="TransactionNo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_AccountStatementMaster_dbo_AccountStatement_AccountTran">
+          <End Role="AccountStatement" Type="Self.AccountStatement" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="AccountStatementMaster" Type="Self.AccountStatementMaster" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AccountStatement">
+              <PropertyRef Name="AccountTran" />
+            </Principal>
+            <Dependent Role="AccountStatementMaster">
+              <PropertyRef Name="AccountTran" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_AccountTransaction_dbo_AccountMaster_AccountNo">
+          <End Role="AccountMaster" Type="Self.AccountMaster" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="AccountTransaction" Type="Self.AccountTransaction" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AccountMaster">
+              <PropertyRef Name="AccountNo" />
+            </Principal>
+            <Dependent Role="AccountTransaction">
+              <PropertyRef Name="AccountNo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_AccountTransaction_dbo_TransactionMaster_TransactionNo">
+          <End Role="TransactionMaster" Type="Self.TransactionMaster" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="AccountTransaction" Type="Self.AccountTransaction" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TransactionMaster">
+              <PropertyRef Name="TransactionNo" />
+            </Principal>
+            <Dependent Role="AccountTransaction">
+              <PropertyRef Name="TransactionNo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_BRSTransaction_dbo_TransactionMaster_TransactionNo">
+          <End Role="TransactionMaster" Type="Self.TransactionMaster" Multiplicity="1" />
+          <End Role="BRSTransaction" Type="Self.BRSTransaction" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TransactionMaster">
+              <PropertyRef Name="TransactionNo" />
+            </Principal>
+            <Dependent Role="BRSTransaction">
+              <PropertyRef Name="TransactionNo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_ChequeTransactions_dbo_TransactionMaster_TransactionNo">
+          <End Role="TransactionMaster" Type="Self.TransactionMaster" Multiplicity="1" />
+          <End Role="ChequeTransactions" Type="Self.ChequeTransactions" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="TransactionMaster">
+              <PropertyRef Name="TransactionNo" />
+            </Principal>
+            <Dependent Role="ChequeTransactions">
+              <PropertyRef Name="TransactionNo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_NarrationTransaction_dbo_TransactionMaster_TransactionNo">
+          <End Role="TransactionMaster" Type="Self.TransactionMaster" Multiplicity="1" />
+          <End Role="NarrationTransaction" Type="Self.NarrationTransaction" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="TransactionMaster">
+              <PropertyRef Name="TransactionNo" />
+            </Principal>
+            <Dependent Role="NarrationTransaction">
+              <PropertyRef Name="TransactionNo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_ProjectTransaction_dbo_TransactionMaster_TransactionNo">
+          <End Role="TransactionMaster" Type="Self.TransactionMaster" Multiplicity="1" />
+          <End Role="ProjectTransaction" Type="Self.ProjectTransaction" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TransactionMaster">
+              <PropertyRef Name="TransactionNo" />
+            </Principal>
+            <Dependent Role="ProjectTransaction">
+              <PropertyRef Name="TransactionNo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_RecoupmentTransaction_dbo_TransactionMaster_TransactionNo">
+          <End Role="TransactionMaster" Type="Self.TransactionMaster" Multiplicity="1" />
+          <End Role="RecoupmentTransaction" Type="Self.RecoupmentTransaction" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="TransactionMaster">
+              <PropertyRef Name="TransactionNo" />
+            </Principal>
+            <Dependent Role="RecoupmentTransaction">
+              <PropertyRef Name="TransactionNo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_SupplierTransaction_dbo_SupplierMasters_SupplierId">
+          <End Role="SupplierMasters" Type="Self.SupplierMasters" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="SupplierTransaction" Type="Self.SupplierTransaction" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SupplierMasters">
+              <PropertyRef Name="SupplierName" />
+            </Principal>
+            <Dependent Role="SupplierTransaction">
+              <PropertyRef Name="SupplierName" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_SupplierTransaction_dbo_TransactionMaster_TransactionNo">
+          <End Role="TransactionMaster" Type="Self.TransactionMaster" Multiplicity="1" />
+          <End Role="SupplierTransaction" Type="Self.SupplierTransaction" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="TransactionMaster">
+              <PropertyRef Name="TransactionNo" />
+            </Principal>
+            <Dependent Role="SupplierTransaction">
+              <PropertyRef Name="TransactionNo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_TransactionMaster_dbo_VoucherType_voucherId">
+          <End Role="VoucherType" Type="Self.VoucherType" Multiplicity="1" />
+          <End Role="TransactionMaster" Type="Self.TransactionMaster" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="VoucherType">
+              <PropertyRef Name="voucherId" />
+            </Principal>
+            <Dependent Role="TransactionMaster">
+              <PropertyRef Name="voucherId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_VoucherDateTransactions_dbo_TransactionMaster_TransactionNo">
+          <End Role="TransactionMaster" Type="Self.TransactionMaster" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="VoucherDateTransactions" Type="Self.VoucherDateTransactions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TransactionMaster">
+              <PropertyRef Name="TransactionNo" />
+            </Principal>
+            <Dependent Role="VoucherDateTransactions">
+              <PropertyRef Name="TransactionNo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Fk_TransactionNo_TransactionMaster_TransactionNo">
+          <End Role="TransactionMaster" Type="Self.TransactionMaster" Multiplicity="1" />
+          <End Role="ChequeNotDeposited" Type="Self.ChequeNotDeposited" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TransactionMaster">
+              <PropertyRef Name="TransactionNo" />
+            </Principal>
+            <Dependent Role="ChequeNotDeposited">
+              <PropertyRef Name="TransactionNo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="ImprestModelStoreContainer">
+          <EntitySet Name="AccountMaster" EntityType="Self.AccountMaster" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AccountStatement" EntityType="Self.AccountStatement" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AccountStatementMaster" EntityType="Self.AccountStatementMaster" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AccountTransaction" EntityType="Self.AccountTransaction" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="BreakUpTransaction" EntityType="Self.BreakUpTransaction" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="BRSTransaction" EntityType="Self.BRSTransaction" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ChequeNotDeposited" EntityType="Self.ChequeNotDeposited" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ChequeTransactions" EntityType="Self.ChequeTransactions" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ClaimNotSubmittedTransaction" EntityType="Self.ClaimNotSubmittedTransaction" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ComputeOpenCloseBal" EntityType="Self.ComputeOpenCloseBal" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="DeletedBreakUpNo" EntityType="Self.DeletedBreakUpNo" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="DeletedTransactionNO" EntityType="Self.DeletedTransactionNO" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="NarrationTransaction" EntityType="Self.NarrationTransaction" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="OpenCloseBalance" EntityType="Self.OpenCloseBalance" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ProjectTransaction" EntityType="Self.ProjectTransaction" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="RecoupmentTransaction" EntityType="Self.RecoupmentTransaction" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SupplierMasters" EntityType="Self.SupplierMasters" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SupplierTransaction" EntityType="Self.SupplierTransaction" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TransactionMaster" EntityType="Self.TransactionMaster" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="VoucherDateTransactions" EntityType="Self.VoucherDateTransactions" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="VoucherType" EntityType="Self.VoucherType" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AccountStatementView" EntityType="Self.AccountStatementView" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [AccountStatementView].[AccountTran] AS [AccountTran], 
+    [AccountStatementView].[PostingDate] AS [PostingDate], 
+    [AccountStatementView].[ValueDate] AS [ValueDate], 
+    [AccountStatementView].[Branch] AS [Branch], 
+    [AccountStatementView].[Descript] AS [Descript], 
+    [AccountStatementView].[RefChqN0] AS [RefChqN0], 
+    [AccountStatementView].[WithDrawals] AS [WithDrawals], 
+    [AccountStatementView].[Deposit] AS [Deposit], 
+    [AccountStatementView].[Balance] AS [Balance], 
+    [AccountStatementView].[AccountNo] AS [AccountNo], 
+    [AccountStatementView].[used] AS [used]
+    FROM [dbo].[AccountStatementView] AS [AccountStatementView]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="TransactionReport" EntityType="Self.TransactionReport" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [TransactionReport].[TransactionNo] AS [TransactionNo], 
+    [TransactionReport].[Amount] AS [Amount], 
+    [TransactionReport].[credit] AS [credit], 
+    [TransactionReport].[voucherType] AS [voucherType], 
+    [TransactionReport].[CreatedOn] AS [CreatedOn], 
+    [TransactionReport].[UpdatedOn] AS [UpdatedOn], 
+    [TransactionReport].[UserId] AS [UserId], 
+    [TransactionReport].[BrsDone] AS [BrsDone], 
+    [TransactionReport].[ChequeNo] AS [ChequeNo], 
+    [TransactionReport].[ChequeDate] AS [ChequeDate], 
+    [TransactionReport].[Narration] AS [Narration], 
+    [TransactionReport].[ProjectNo] AS [ProjectNo], 
+    [TransactionReport].[ProjectType] AS [ProjectType], 
+    [TransactionReport].[SupplierName] AS [SupplierName], 
+    [TransactionReport].[VoucherDate] AS [VoucherDate], 
+    [TransactionReport].[AccountNo] AS [AccountNo], 
+    [TransactionReport].[NotDeposited] AS [NotDeposited], 
+    [TransactionReport].[VoucherIdInt] AS [VoucherIdInt]
+    FROM [dbo].[TransactionReport] AS [TransactionReport]</DefiningQuery>
+          </EntitySet>
+          <AssociationSet Name="FK_ClaimNotSubmittedTransaction_TransactionNo_TransactionMaster_TransactionNo" Association="Self.FK_ClaimNotSubmittedTransaction_TransactionNo_TransactionMaster_TransactionNo">
+            <End Role="TransactionMaster" EntitySet="TransactionMaster" />
+            <End Role="ClaimNotSubmittedTransaction" EntitySet="ClaimNotSubmittedTransaction" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_AccountStatementMaster_dbo_AccountStatement_AccountTran" Association="Self.FK_dbo_AccountStatementMaster_dbo_AccountStatement_AccountTran">
+            <End Role="AccountStatement" EntitySet="AccountStatement" />
+            <End Role="AccountStatementMaster" EntitySet="AccountStatementMaster" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_AccountTransaction_dbo_AccountMaster_AccountNo" Association="Self.FK_dbo_AccountTransaction_dbo_AccountMaster_AccountNo">
+            <End Role="AccountMaster" EntitySet="AccountMaster" />
+            <End Role="AccountTransaction" EntitySet="AccountTransaction" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_AccountTransaction_dbo_TransactionMaster_TransactionNo" Association="Self.FK_dbo_AccountTransaction_dbo_TransactionMaster_TransactionNo">
+            <End Role="TransactionMaster" EntitySet="TransactionMaster" />
+            <End Role="AccountTransaction" EntitySet="AccountTransaction" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_BRSTransaction_dbo_TransactionMaster_TransactionNo" Association="Self.FK_dbo_BRSTransaction_dbo_TransactionMaster_TransactionNo">
+            <End Role="TransactionMaster" EntitySet="TransactionMaster" />
+            <End Role="BRSTransaction" EntitySet="BRSTransaction" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_ChequeTransactions_dbo_TransactionMaster_TransactionNo" Association="Self.FK_dbo_ChequeTransactions_dbo_TransactionMaster_TransactionNo">
+            <End Role="TransactionMaster" EntitySet="TransactionMaster" />
+            <End Role="ChequeTransactions" EntitySet="ChequeTransactions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_NarrationTransaction_dbo_TransactionMaster_TransactionNo" Association="Self.FK_dbo_NarrationTransaction_dbo_TransactionMaster_TransactionNo">
+            <End Role="TransactionMaster" EntitySet="TransactionMaster" />
+            <End Role="NarrationTransaction" EntitySet="NarrationTransaction" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_ProjectTransaction_dbo_TransactionMaster_TransactionNo" Association="Self.FK_dbo_ProjectTransaction_dbo_TransactionMaster_TransactionNo">
+            <End Role="TransactionMaster" EntitySet="TransactionMaster" />
+            <End Role="ProjectTransaction" EntitySet="ProjectTransaction" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_RecoupmentTransaction_dbo_TransactionMaster_TransactionNo" Association="Self.FK_dbo_RecoupmentTransaction_dbo_TransactionMaster_TransactionNo">
+            <End Role="TransactionMaster" EntitySet="TransactionMaster" />
+            <End Role="RecoupmentTransaction" EntitySet="RecoupmentTransaction" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_SupplierTransaction_dbo_SupplierMasters_SupplierId" Association="Self.FK_dbo_SupplierTransaction_dbo_SupplierMasters_SupplierId">
+            <End Role="SupplierMasters" EntitySet="SupplierMasters" />
+            <End Role="SupplierTransaction" EntitySet="SupplierTransaction" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_SupplierTransaction_dbo_TransactionMaster_TransactionNo" Association="Self.FK_dbo_SupplierTransaction_dbo_TransactionMaster_TransactionNo">
+            <End Role="TransactionMaster" EntitySet="TransactionMaster" />
+            <End Role="SupplierTransaction" EntitySet="SupplierTransaction" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_TransactionMaster_dbo_VoucherType_voucherId" Association="Self.FK_dbo_TransactionMaster_dbo_VoucherType_voucherId">
+            <End Role="VoucherType" EntitySet="VoucherType" />
+            <End Role="TransactionMaster" EntitySet="TransactionMaster" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_VoucherDateTransactions_dbo_TransactionMaster_TransactionNo" Association="Self.FK_dbo_VoucherDateTransactions_dbo_TransactionMaster_TransactionNo">
+            <End Role="TransactionMaster" EntitySet="TransactionMaster" />
+            <End Role="VoucherDateTransactions" EntitySet="VoucherDateTransactions" />
+          </AssociationSet>
+          <AssociationSet Name="Fk_TransactionNo_TransactionMaster_TransactionNo" Association="Self.Fk_TransactionNo_TransactionMaster_TransactionNo">
+            <End Role="TransactionMaster" EntitySet="TransactionMaster" />
+            <End Role="ChequeNotDeposited" EntitySet="ChequeNotDeposited" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="ImprestModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="AccountMaster">
+          <Key>
+            <PropertyRef Name="AccountNo" />
+          </Key>
+          <Property Name="AccountNo" Type="String" MaxLength="13" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="InstId" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="CustId" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="CardNo" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Email" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Amount" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
+          <NavigationProperty Name="AccountTransactions" Relationship="Self.FK_dbo_AccountTransaction_dbo_AccountMaster_AccountNo" FromRole="AccountMaster" ToRole="AccountTransaction" />
+        </EntityType>
+        <EntityType Name="AccountStatement">
+          <Key>
+            <PropertyRef Name="AccountTran" />
+          </Key>
+          <Property Name="AccountTran" Type="String" MaxLength="16" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="PostingDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="ValueDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Branch" Type="String" MaxLength="4" FixedLength="false" Unicode="true" />
+          <Property Name="Descript" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="RefChqN0" Type="String" MaxLength="12" FixedLength="false" Unicode="true" />
+          <Property Name="WithDrawals" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="Deposit" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="Balance" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="used" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="AccountStatementMasters" Relationship="Self.FK_dbo_AccountStatementMaster_dbo_AccountStatement_AccountTran" FromRole="AccountStatement" ToRole="AccountStatementMaster" />
+        </EntityType>
+        <EntityType Name="AccountStatementMaster">
+          <Key>
+            <PropertyRef Name="AccountNo" />
+            <PropertyRef Name="AccountTran" />
+          </Key>
+          <Property Name="AccountNo" Type="String" MaxLength="13" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="AccountTran" Type="String" MaxLength="16" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="AccountStatement" Relationship="Self.FK_dbo_AccountStatementMaster_dbo_AccountStatement_AccountTran" FromRole="AccountStatementMaster" ToRole="AccountStatement" />
+        </EntityType>
+        <EntityType Name="AccountTransaction">
+          <Key>
+            <PropertyRef Name="TransactionNo" />
+            <PropertyRef Name="AccountNo" />
+          </Key>
+          <Property Name="TransactionNo" Type="String" MaxLength="25" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="AccountNo" Type="String" MaxLength="13" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="CreatedOn" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="AccountMaster" Relationship="Self.FK_dbo_AccountTransaction_dbo_AccountMaster_AccountNo" FromRole="AccountTransaction" ToRole="AccountMaster" />
+          <NavigationProperty Name="TransactionMaster" Relationship="Self.FK_dbo_AccountTransaction_dbo_TransactionMaster_TransactionNo" FromRole="AccountTransaction" ToRole="TransactionMaster" />
+        </EntityType>
+        <EntityType Name="BreakUpTransaction">
+          <Key>
+            <PropertyRef Name="TransactionNo" />
+            <PropertyRef Name="BreakUpNo" />
+          </Key>
+          <Property Name="TransactionNo" Type="String" MaxLength="25" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="BreakUpNo" Type="Int32" Nullable="false" />
+          <Property Name="VoucherNo" Type="String" MaxLength="8" FixedLength="false" Unicode="true" />
+          <Property Name="CommitmentNo" Type="String" MaxLength="12" FixedLength="false" Unicode="true" />
+          <Property Name="ProjectNo" Type="String" MaxLength="23" FixedLength="false" Unicode="true" />
+          <Property Name="ProjectType" Type="Int32" />
+          <Property Name="Amount" Type="Decimal" Precision="18" Scale="4" Nullable="false" />
+        </EntityType>
+        <EntityType Name="BRSTransaction">
+          <Key>
+            <PropertyRef Name="TransactionNo" />
+            <PropertyRef Name="BrsDone" />
+          </Key>
+          <Property Name="TransactionNo" Type="String" MaxLength="25" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="BrsDone" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="TransactionMaster" Relationship="Self.FK_dbo_BRSTransaction_dbo_TransactionMaster_TransactionNo" FromRole="BRSTransaction" ToRole="TransactionMaster" />
+        </EntityType>
+        <EntityType Name="ChequeNotDeposited">
+          <Key>
+            <PropertyRef Name="TransactionNo" />
+            <PropertyRef Name="NotDeposited" />
+          </Key>
+          <Property Name="TransactionNo" Type="String" MaxLength="25" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="NotDeposited" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="TransactionMaster" Relationship="Self.Fk_TransactionNo_TransactionMaster_TransactionNo" FromRole="ChequeNotDeposited" ToRole="TransactionMaster" />
+        </EntityType>
+        <EntityType Name="ChequeTransaction">
+          <Key>
+            <PropertyRef Name="TransactionNo" />
+          </Key>
+          <Property Name="TransactionNo" Type="String" MaxLength="25" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ChequeNo" Type="String" MaxLength="16" FixedLength="false" Unicode="true" />
+          <Property Name="ChequeDate" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="TransactionMaster" Relationship="Self.FK_dbo_ChequeTransactions_dbo_TransactionMaster_TransactionNo" FromRole="ChequeTransactions" ToRole="TransactionMaster" />
+        </EntityType>
+        <EntityType Name="ClaimNotSubmittedTransaction">
+          <Key>
+            <PropertyRef Name="TransactionNo" />
+            <PropertyRef Name="ClaimNotSubmitted" />
+          </Key>
+          <Property Name="TransactionNo" Type="String" MaxLength="25" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ClaimNotSubmitted" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="TransactionMaster" Relationship="Self.FK_ClaimNotSubmittedTransaction_TransactionNo_TransactionMaster_TransactionNo" FromRole="ClaimNotSubmittedTransaction" ToRole="TransactionMaster" />
+        </EntityType>
+        <EntityType Name="DeletedBreakUpNo">
+          <Key>
+            <PropertyRef Name="BreakUpNo" />
+          </Key>
+          <Property Name="BreakUpNo" Type="String" MaxLength="25" FixedLength="false" Unicode="true" Nullable="false" />
+        </EntityType>
+        <EntityType Name="DeletedTransactionNO">
+          <Key>
+            <PropertyRef Name="TransactionNo" />
+          </Key>
+          <Property Name="TransactionNo" Type="String" MaxLength="25" FixedLength="false" Unicode="true" Nullable="false" />
+        </EntityType>
+        <EntityType Name="NarrationTransaction">
+          <Key>
+            <PropertyRef Name="TransactionNo" />
+          </Key>
+          <Property Name="TransactionNo" Type="String" MaxLength="25" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Narration" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="TransactionMaster" Relationship="Self.FK_dbo_NarrationTransaction_dbo_TransactionMaster_TransactionNo" FromRole="NarrationTransaction" ToRole="TransactionMaster" />
+        </EntityType>
+        <EntityType Name="ProjectTransaction">
+          <Key>
+            <PropertyRef Name="TransactionNo" />
+            <PropertyRef Name="ProjectNo" />
+            <PropertyRef Name="ProjectType" />
+          </Key>
+          <Property Name="TransactionNo" Type="String" MaxLength="25" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ProjectNo" Type="String" MaxLength="22" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ProjectType" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="TransactionMaster" Relationship="Self.FK_dbo_ProjectTransaction_dbo_TransactionMaster_TransactionNo" FromRole="ProjectTransaction" ToRole="TransactionMaster" />
+        </EntityType>
+        <EntityType Name="RecoupmentTransaction">
+          <Key>
+            <PropertyRef Name="TransactionNo" />
+          </Key>
+          <Property Name="TransactionNo" Type="String" MaxLength="25" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="RecoupmentId" Type="String" MaxLength="25" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="TransactionMaster" Relationship="Self.FK_dbo_RecoupmentTransaction_dbo_TransactionMaster_TransactionNo" FromRole="RecoupmentTransaction" ToRole="TransactionMaster" />
+        </EntityType>
+        <EntityType Name="SupplierMaster">
+          <Key>
+            <PropertyRef Name="SupplierName" />
+          </Key>
+          <Property Name="SupplierName" Type="String" MaxLength="80" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="TIN" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
+          <Property Name="TAN" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
+          <Property Name="PAN" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="SupplierTransactions" Relationship="Self.FK_dbo_SupplierTransaction_dbo_SupplierMasters_SupplierId" FromRole="SupplierMasters" ToRole="SupplierTransaction" />
+        </EntityType>
+        <EntityType Name="SupplierTransaction">
+          <Key>
+            <PropertyRef Name="TransactionNo" />
+          </Key>
+          <Property Name="TransactionNo" Type="String" MaxLength="25" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="SupplierName" Type="String" MaxLength="80" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="CreatedOn" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="SupplierMaster" Relationship="Self.FK_dbo_SupplierTransaction_dbo_SupplierMasters_SupplierId" FromRole="SupplierTransaction" ToRole="SupplierMasters" />
+          <NavigationProperty Name="TransactionMaster" Relationship="Self.FK_dbo_SupplierTransaction_dbo_TransactionMaster_TransactionNo" FromRole="SupplierTransaction" ToRole="TransactionMaster" />
+        </EntityType>
+        <EntityType Name="TransactionMaster">
+          <Key>
+            <PropertyRef Name="TransactionNo" />
+          </Key>
+          <Property Name="TransactionNo" Type="String" MaxLength="25" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Amount" Type="Decimal" Precision="13" Scale="2" Nullable="false" />
+          <Property Name="credit" Type="Boolean" Nullable="false" />
+          <Property Name="voucherId" Type="Int32" Nullable="false" />
+          <Property Name="CreatedOn" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="UpdatedOn" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="UserId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="AccountTransactions" Relationship="Self.FK_dbo_AccountTransaction_dbo_TransactionMaster_TransactionNo" FromRole="TransactionMaster" ToRole="AccountTransaction" />
+          <NavigationProperty Name="BRSTransactions" Relationship="Self.FK_dbo_BRSTransaction_dbo_TransactionMaster_TransactionNo" FromRole="TransactionMaster" ToRole="BRSTransaction" />
+          <NavigationProperty Name="ChequeNotDepositeds" Relationship="Self.Fk_TransactionNo_TransactionMaster_TransactionNo" FromRole="TransactionMaster" ToRole="ChequeNotDeposited" />
+          <NavigationProperty Name="ChequeTransaction" Relationship="Self.FK_dbo_ChequeTransactions_dbo_TransactionMaster_TransactionNo" FromRole="TransactionMaster" ToRole="ChequeTransactions" />
+          <NavigationProperty Name="ClaimNotSubmittedTransactions" Relationship="Self.FK_ClaimNotSubmittedTransaction_TransactionNo_TransactionMaster_TransactionNo" FromRole="TransactionMaster" ToRole="ClaimNotSubmittedTransaction" />
+          <NavigationProperty Name="NarrationTransaction" Relationship="Self.FK_dbo_NarrationTransaction_dbo_TransactionMaster_TransactionNo" FromRole="TransactionMaster" ToRole="NarrationTransaction" />
+          <NavigationProperty Name="ProjectTransactions" Relationship="Self.FK_dbo_ProjectTransaction_dbo_TransactionMaster_TransactionNo" FromRole="TransactionMaster" ToRole="ProjectTransaction" />
+          <NavigationProperty Name="RecoupmentTransaction" Relationship="Self.FK_dbo_RecoupmentTransaction_dbo_TransactionMaster_TransactionNo" FromRole="TransactionMaster" ToRole="RecoupmentTransaction" />
+          <NavigationProperty Name="SupplierTransaction" Relationship="Self.FK_dbo_SupplierTransaction_dbo_TransactionMaster_TransactionNo" FromRole="TransactionMaster" ToRole="SupplierTransaction" />
+          <NavigationProperty Name="VoucherType" Relationship="Self.FK_dbo_TransactionMaster_dbo_VoucherType_voucherId" FromRole="TransactionMaster" ToRole="VoucherType" />
+          <NavigationProperty Name="VoucherDateTransactions" Relationship="Self.FK_dbo_VoucherDateTransactions_dbo_TransactionMaster_TransactionNo" FromRole="TransactionMaster" ToRole="VoucherDateTransactions" />
+        </EntityType>
+        <EntityType Name="VoucherDateTransaction">
+          <Key>
+            <PropertyRef Name="TransactionNo" />
+            <PropertyRef Name="VoucherDate" />
+          </Key>
+          <Property Name="TransactionNo" Type="String" MaxLength="25" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="VoucherDate" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="TransactionMaster" Relationship="Self.FK_dbo_VoucherDateTransactions_dbo_TransactionMaster_TransactionNo" FromRole="VoucherDateTransactions" ToRole="TransactionMaster" />
+        </EntityType>
+        <EntityType Name="VoucherType">
+          <Key>
+            <PropertyRef Name="voucherId" />
+          </Key>
+          <Property Name="voucherId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="voucherType1" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="TransactionMasters" Relationship="Self.FK_dbo_TransactionMaster_dbo_VoucherType_voucherId" FromRole="VoucherType" ToRole="TransactionMaster" />
+        </EntityType>
+        <EntityType Name="AccountStatementView">
+          <Key>
+            <PropertyRef Name="AccountTran" />
+            <PropertyRef Name="PostingDate" />
+            <PropertyRef Name="ValueDate" />
+            <PropertyRef Name="WithDrawals" />
+            <PropertyRef Name="Deposit" />
+            <PropertyRef Name="Balance" />
+            <PropertyRef Name="AccountNo" />
+            <PropertyRef Name="used" />
+          </Key>
+          <Property Name="AccountTran" Type="String" MaxLength="16" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="PostingDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="ValueDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Branch" Type="String" MaxLength="4" FixedLength="false" Unicode="true" />
+          <Property Name="Descript" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="RefChqN0" Type="String" MaxLength="12" FixedLength="false" Unicode="true" />
+          <Property Name="WithDrawals" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="Deposit" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="Balance" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="AccountNo" Type="String" MaxLength="13" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="used" Type="Boolean" Nullable="false" />
+        </EntityType>
+        <EntityType Name="TransactionReport">
+          <Key>
+            <PropertyRef Name="TransactionNo" />
+            <PropertyRef Name="credit" />
+            <PropertyRef Name="BrsDone" />
+            <PropertyRef Name="VoucherDate" />
+            <PropertyRef Name="AccountNo" />
+            <PropertyRef Name="NotDeposited" />
+            <PropertyRef Name="VoucherIdInt" />
+          </Key>
+          <Property Name="TransactionNo" Type="String" MaxLength="25" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Amount" Type="Decimal" Precision="13" Scale="2" />
+          <Property Name="credit" Type="Boolean" Nullable="false" />
+          <Property Name="voucherType" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedOn" Type="DateTime" Precision="3" />
+          <Property Name="UpdatedOn" Type="DateTime" Precision="3" />
+          <Property Name="UserId" Type="Int32" />
+          <Property Name="BrsDone" Type="Boolean" Nullable="false" />
+          <Property Name="ChequeNo" Type="String" MaxLength="16" FixedLength="false" Unicode="true" />
+          <Property Name="ChequeDate" Type="DateTime" Precision="3" />
+          <Property Name="Narration" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="ProjectNo" Type="String" MaxLength="22" FixedLength="false" Unicode="true" />
+          <Property Name="ProjectType" Type="Int32" />
+          <Property Name="SupplierName" Type="String" MaxLength="80" FixedLength="false" Unicode="true" />
+          <Property Name="VoucherDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="AccountNo" Type="String" MaxLength="13" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="NotDeposited" Type="Boolean" Nullable="false" />
+          <Property Name="VoucherIdInt" Type="Int32" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_dbo_AccountTransaction_dbo_AccountMaster_AccountNo">
+          <End Role="AccountMaster" Type="Self.AccountMaster" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="AccountTransaction" Type="Self.AccountTransaction" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AccountMaster">
+              <PropertyRef Name="AccountNo" />
+            </Principal>
+            <Dependent Role="AccountTransaction">
+              <PropertyRef Name="AccountNo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_AccountStatementMaster_dbo_AccountStatement_AccountTran">
+          <End Role="AccountStatement" Type="Self.AccountStatement" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="AccountStatementMaster" Type="Self.AccountStatementMaster" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AccountStatement">
+              <PropertyRef Name="AccountTran" />
+            </Principal>
+            <Dependent Role="AccountStatementMaster">
+              <PropertyRef Name="AccountTran" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_AccountTransaction_dbo_TransactionMaster_TransactionNo">
+          <End Role="TransactionMaster" Type="Self.TransactionMaster" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="AccountTransaction" Type="Self.AccountTransaction" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TransactionMaster">
+              <PropertyRef Name="TransactionNo" />
+            </Principal>
+            <Dependent Role="AccountTransaction">
+              <PropertyRef Name="TransactionNo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_BRSTransaction_dbo_TransactionMaster_TransactionNo">
+          <End Role="TransactionMaster" Type="Self.TransactionMaster" Multiplicity="1" />
+          <End Role="BRSTransaction" Type="Self.BRSTransaction" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TransactionMaster">
+              <PropertyRef Name="TransactionNo" />
+            </Principal>
+            <Dependent Role="BRSTransaction">
+              <PropertyRef Name="TransactionNo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Fk_TransactionNo_TransactionMaster_TransactionNo">
+          <End Role="TransactionMaster" Type="Self.TransactionMaster" Multiplicity="1" />
+          <End Role="ChequeNotDeposited" Type="Self.ChequeNotDeposited" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TransactionMaster">
+              <PropertyRef Name="TransactionNo" />
+            </Principal>
+            <Dependent Role="ChequeNotDeposited">
+              <PropertyRef Name="TransactionNo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_ChequeTransactions_dbo_TransactionMaster_TransactionNo">
+          <End Role="TransactionMaster" Type="Self.TransactionMaster" Multiplicity="1" />
+          <End Role="ChequeTransactions" Type="Self.ChequeTransaction" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="TransactionMaster">
+              <PropertyRef Name="TransactionNo" />
+            </Principal>
+            <Dependent Role="ChequeTransactions">
+              <PropertyRef Name="TransactionNo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ClaimNotSubmittedTransaction_TransactionNo_TransactionMaster_TransactionNo">
+          <End Role="TransactionMaster" Type="Self.TransactionMaster" Multiplicity="1" />
+          <End Role="ClaimNotSubmittedTransaction" Type="Self.ClaimNotSubmittedTransaction" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TransactionMaster">
+              <PropertyRef Name="TransactionNo" />
+            </Principal>
+            <Dependent Role="ClaimNotSubmittedTransaction">
+              <PropertyRef Name="TransactionNo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_NarrationTransaction_dbo_TransactionMaster_TransactionNo">
+          <End Role="TransactionMaster" Type="Self.TransactionMaster" Multiplicity="1" />
+          <End Role="NarrationTransaction" Type="Self.NarrationTransaction" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="TransactionMaster">
+              <PropertyRef Name="TransactionNo" />
+            </Principal>
+            <Dependent Role="NarrationTransaction">
+              <PropertyRef Name="TransactionNo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_ProjectTransaction_dbo_TransactionMaster_TransactionNo">
+          <End Role="TransactionMaster" Type="Self.TransactionMaster" Multiplicity="1" />
+          <End Role="ProjectTransaction" Type="Self.ProjectTransaction" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TransactionMaster">
+              <PropertyRef Name="TransactionNo" />
+            </Principal>
+            <Dependent Role="ProjectTransaction">
+              <PropertyRef Name="TransactionNo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_RecoupmentTransaction_dbo_TransactionMaster_TransactionNo">
+          <End Role="TransactionMaster" Type="Self.TransactionMaster" Multiplicity="1" />
+          <End Role="RecoupmentTransaction" Type="Self.RecoupmentTransaction" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="TransactionMaster">
+              <PropertyRef Name="TransactionNo" />
+            </Principal>
+            <Dependent Role="RecoupmentTransaction">
+              <PropertyRef Name="TransactionNo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_SupplierTransaction_dbo_SupplierMasters_SupplierId">
+          <End Role="SupplierMasters" Type="Self.SupplierMaster" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="SupplierTransaction" Type="Self.SupplierTransaction" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SupplierMasters">
+              <PropertyRef Name="SupplierName" />
+            </Principal>
+            <Dependent Role="SupplierTransaction">
+              <PropertyRef Name="SupplierName" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_SupplierTransaction_dbo_TransactionMaster_TransactionNo">
+          <End Role="TransactionMaster" Type="Self.TransactionMaster" Multiplicity="1" />
+          <End Role="SupplierTransaction" Type="Self.SupplierTransaction" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="TransactionMaster">
+              <PropertyRef Name="TransactionNo" />
+            </Principal>
+            <Dependent Role="SupplierTransaction">
+              <PropertyRef Name="TransactionNo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_TransactionMaster_dbo_VoucherType_voucherId">
+          <End Role="VoucherType" Type="Self.VoucherType" Multiplicity="1" />
+          <End Role="TransactionMaster" Type="Self.TransactionMaster" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="VoucherType">
+              <PropertyRef Name="voucherId" />
+            </Principal>
+            <Dependent Role="TransactionMaster">
+              <PropertyRef Name="voucherId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_VoucherDateTransactions_dbo_TransactionMaster_TransactionNo">
+          <End Role="TransactionMaster" Type="Self.TransactionMaster" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="VoucherDateTransactions" Type="Self.VoucherDateTransaction" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TransactionMaster">
+              <PropertyRef Name="TransactionNo" />
+            </Principal>
+            <Dependent Role="VoucherDateTransactions">
+              <PropertyRef Name="TransactionNo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="ImprestEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="AccountMasters" EntityType="Self.AccountMaster" />
+          <EntitySet Name="AccountStatements" EntityType="Self.AccountStatement" />
+          <EntitySet Name="AccountStatementMasters" EntityType="Self.AccountStatementMaster" />
+          <EntitySet Name="AccountTransactions" EntityType="Self.AccountTransaction" />
+          <EntitySet Name="BreakUpTransactions" EntityType="Self.BreakUpTransaction" />
+          <EntitySet Name="BRSTransactions" EntityType="Self.BRSTransaction" />
+          <EntitySet Name="ChequeNotDepositeds" EntityType="Self.ChequeNotDeposited" />
+          <EntitySet Name="ChequeTransactions" EntityType="Self.ChequeTransaction" />
+          <EntitySet Name="ClaimNotSubmittedTransactions" EntityType="Self.ClaimNotSubmittedTransaction" />
+          <EntitySet Name="DeletedBreakUpNoes" EntityType="Self.DeletedBreakUpNo" />
+          <EntitySet Name="DeletedTransactionNOes" EntityType="Self.DeletedTransactionNO" />
+          <EntitySet Name="NarrationTransactions" EntityType="Self.NarrationTransaction" />
+          <EntitySet Name="ProjectTransactions" EntityType="Self.ProjectTransaction" />
+          <EntitySet Name="RecoupmentTransactions" EntityType="Self.RecoupmentTransaction" />
+          <EntitySet Name="SupplierMasters" EntityType="Self.SupplierMaster" />
+          <EntitySet Name="SupplierTransactions" EntityType="Self.SupplierTransaction" />
+          <EntitySet Name="TransactionMasters" EntityType="Self.TransactionMaster" />
+          <EntitySet Name="VoucherDateTransactions" EntityType="Self.VoucherDateTransaction" />
+          <EntitySet Name="VoucherTypes" EntityType="Self.VoucherType" />
+          <EntitySet Name="AccountStatementViews" EntityType="Self.AccountStatementView" />
+          <EntitySet Name="TransactionReports" EntityType="Self.TransactionReport" />
+          <AssociationSet Name="FK_dbo_AccountTransaction_dbo_AccountMaster_AccountNo" Association="Self.FK_dbo_AccountTransaction_dbo_AccountMaster_AccountNo">
+            <End Role="AccountMaster" EntitySet="AccountMasters" />
+            <End Role="AccountTransaction" EntitySet="AccountTransactions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_AccountStatementMaster_dbo_AccountStatement_AccountTran" Association="Self.FK_dbo_AccountStatementMaster_dbo_AccountStatement_AccountTran">
+            <End Role="AccountStatement" EntitySet="AccountStatements" />
+            <End Role="AccountStatementMaster" EntitySet="AccountStatementMasters" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_AccountTransaction_dbo_TransactionMaster_TransactionNo" Association="Self.FK_dbo_AccountTransaction_dbo_TransactionMaster_TransactionNo">
+            <End Role="TransactionMaster" EntitySet="TransactionMasters" />
+            <End Role="AccountTransaction" EntitySet="AccountTransactions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_BRSTransaction_dbo_TransactionMaster_TransactionNo" Association="Self.FK_dbo_BRSTransaction_dbo_TransactionMaster_TransactionNo">
+            <End Role="TransactionMaster" EntitySet="TransactionMasters" />
+            <End Role="BRSTransaction" EntitySet="BRSTransactions" />
+          </AssociationSet>
+          <AssociationSet Name="Fk_TransactionNo_TransactionMaster_TransactionNo" Association="Self.Fk_TransactionNo_TransactionMaster_TransactionNo">
+            <End Role="TransactionMaster" EntitySet="TransactionMasters" />
+            <End Role="ChequeNotDeposited" EntitySet="ChequeNotDepositeds" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_ChequeTransactions_dbo_TransactionMaster_TransactionNo" Association="Self.FK_dbo_ChequeTransactions_dbo_TransactionMaster_TransactionNo">
+            <End Role="TransactionMaster" EntitySet="TransactionMasters" />
+            <End Role="ChequeTransactions" EntitySet="ChequeTransactions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ClaimNotSubmittedTransaction_TransactionNo_TransactionMaster_TransactionNo" Association="Self.FK_ClaimNotSubmittedTransaction_TransactionNo_TransactionMaster_TransactionNo">
+            <End Role="TransactionMaster" EntitySet="TransactionMasters" />
+            <End Role="ClaimNotSubmittedTransaction" EntitySet="ClaimNotSubmittedTransactions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_NarrationTransaction_dbo_TransactionMaster_TransactionNo" Association="Self.FK_dbo_NarrationTransaction_dbo_TransactionMaster_TransactionNo">
+            <End Role="TransactionMaster" EntitySet="TransactionMasters" />
+            <End Role="NarrationTransaction" EntitySet="NarrationTransactions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_ProjectTransaction_dbo_TransactionMaster_TransactionNo" Association="Self.FK_dbo_ProjectTransaction_dbo_TransactionMaster_TransactionNo">
+            <End Role="TransactionMaster" EntitySet="TransactionMasters" />
+            <End Role="ProjectTransaction" EntitySet="ProjectTransactions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_RecoupmentTransaction_dbo_TransactionMaster_TransactionNo" Association="Self.FK_dbo_RecoupmentTransaction_dbo_TransactionMaster_TransactionNo">
+            <End Role="TransactionMaster" EntitySet="TransactionMasters" />
+            <End Role="RecoupmentTransaction" EntitySet="RecoupmentTransactions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_SupplierTransaction_dbo_SupplierMasters_SupplierId" Association="Self.FK_dbo_SupplierTransaction_dbo_SupplierMasters_SupplierId">
+            <End Role="SupplierMasters" EntitySet="SupplierMasters" />
+            <End Role="SupplierTransaction" EntitySet="SupplierTransactions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_SupplierTransaction_dbo_TransactionMaster_TransactionNo" Association="Self.FK_dbo_SupplierTransaction_dbo_TransactionMaster_TransactionNo">
+            <End Role="TransactionMaster" EntitySet="TransactionMasters" />
+            <End Role="SupplierTransaction" EntitySet="SupplierTransactions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_TransactionMaster_dbo_VoucherType_voucherId" Association="Self.FK_dbo_TransactionMaster_dbo_VoucherType_voucherId">
+            <End Role="VoucherType" EntitySet="VoucherTypes" />
+            <End Role="TransactionMaster" EntitySet="TransactionMasters" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_VoucherDateTransactions_dbo_TransactionMaster_TransactionNo" Association="Self.FK_dbo_VoucherDateTransactions_dbo_TransactionMaster_TransactionNo">
+            <End Role="TransactionMaster" EntitySet="TransactionMasters" />
+            <End Role="VoucherDateTransactions" EntitySet="VoucherDateTransactions" />
+          </AssociationSet>
+          <EntitySet Name="OpenCloseBalances" EntityType="ImprestModel.OpenCloseBalance" />
+          <EntitySet Name="ComputeOpenCloseBals" EntityType="ImprestModel.ComputeOpenCloseBal" />
+        </EntityContainer>
+        <EntityType Name="OpenCloseBalance">
+          <Key>
+            <PropertyRef Name="AccountNo" />
+            <PropertyRef Name="TranDate" />
+          </Key>
+          <Property Name="AccountNo" Type="String" Nullable="false" MaxLength="13" FixedLength="false" Unicode="true" />
+          <Property Name="TranDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="OpeningBalance" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="closingBalance" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+        </EntityType>
+        <EntityType Name="ComputeOpenCloseBal">
+          <Key>
+            <PropertyRef Name="AccountNo" />
+          </Key>
+          <Property Name="AccountNo" Type="String" Nullable="false" MaxLength="13" FixedLength="false" Unicode="true" />
+          <Property Name="Trandate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Checked" Type="Boolean" Nullable="false" />
+        </EntityType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="ImprestModelStoreContainer" CdmEntityContainer="ImprestEntities">
+          <EntitySetMapping Name="AccountMasters">
+            <EntityTypeMapping TypeName="ImprestModel.AccountMaster">
+              <MappingFragment StoreEntitySet="AccountMaster">
+                <ScalarProperty Name="AccountNo" ColumnName="AccountNo" />
+                <ScalarProperty Name="InstId" ColumnName="InstId" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="CustId" ColumnName="CustId" />
+                <ScalarProperty Name="CardNo" ColumnName="CardNo" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Amount" ColumnName="Amount" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AccountStatements">
+            <EntityTypeMapping TypeName="ImprestModel.AccountStatement">
+              <MappingFragment StoreEntitySet="AccountStatement">
+                <ScalarProperty Name="AccountTran" ColumnName="AccountTran" />
+                <ScalarProperty Name="PostingDate" ColumnName="PostingDate" />
+                <ScalarProperty Name="ValueDate" ColumnName="ValueDate" />
+                <ScalarProperty Name="Branch" ColumnName="Branch" />
+                <ScalarProperty Name="Descript" ColumnName="Descript" />
+                <ScalarProperty Name="RefChqN0" ColumnName="RefChqN0" />
+                <ScalarProperty Name="WithDrawals" ColumnName="WithDrawals" />
+                <ScalarProperty Name="Deposit" ColumnName="Deposit" />
+                <ScalarProperty Name="Balance" ColumnName="Balance" />
+                <ScalarProperty Name="used" ColumnName="used" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AccountStatementMasters">
+            <EntityTypeMapping TypeName="ImprestModel.AccountStatementMaster">
+              <MappingFragment StoreEntitySet="AccountStatementMaster">
+                <ScalarProperty Name="AccountNo" ColumnName="AccountNo" />
+                <ScalarProperty Name="AccountTran" ColumnName="AccountTran" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AccountTransactions">
+            <EntityTypeMapping TypeName="ImprestModel.AccountTransaction">
+              <MappingFragment StoreEntitySet="AccountTransaction">
+                <ScalarProperty Name="TransactionNo" ColumnName="TransactionNo" />
+                <ScalarProperty Name="AccountNo" ColumnName="AccountNo" />
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="BreakUpTransactions">
+            <EntityTypeMapping TypeName="ImprestModel.BreakUpTransaction">
+              <MappingFragment StoreEntitySet="BreakUpTransaction">
+                <ScalarProperty Name="TransactionNo" ColumnName="TransactionNo" />
+                <ScalarProperty Name="BreakUpNo" ColumnName="BreakUpNo" />
+                <ScalarProperty Name="VoucherNo" ColumnName="VoucherNo" />
+                <ScalarProperty Name="CommitmentNo" ColumnName="CommitmentNo" />
+                <ScalarProperty Name="ProjectNo" ColumnName="ProjectNo" />
+                <ScalarProperty Name="ProjectType" ColumnName="ProjectType" />
+                <ScalarProperty Name="Amount" ColumnName="Amount" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="BRSTransactions">
+            <EntityTypeMapping TypeName="ImprestModel.BRSTransaction">
+              <MappingFragment StoreEntitySet="BRSTransaction">
+                <ScalarProperty Name="TransactionNo" ColumnName="TransactionNo" />
+                <ScalarProperty Name="BrsDone" ColumnName="BrsDone" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ChequeNotDepositeds">
+            <EntityTypeMapping TypeName="ImprestModel.ChequeNotDeposited">
+              <MappingFragment StoreEntitySet="ChequeNotDeposited">
+                <ScalarProperty Name="TransactionNo" ColumnName="TransactionNo" />
+                <ScalarProperty Name="NotDeposited" ColumnName="NotDeposited" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ChequeTransactions">
+            <EntityTypeMapping TypeName="ImprestModel.ChequeTransaction">
+              <MappingFragment StoreEntitySet="ChequeTransactions">
+                <ScalarProperty Name="TransactionNo" ColumnName="TransactionNo" />
+                <ScalarProperty Name="ChequeNo" ColumnName="ChequeNo" />
+                <ScalarProperty Name="ChequeDate" ColumnName="ChequeDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ClaimNotSubmittedTransactions">
+            <EntityTypeMapping TypeName="ImprestModel.ClaimNotSubmittedTransaction">
+              <MappingFragment StoreEntitySet="ClaimNotSubmittedTransaction">
+                <ScalarProperty Name="TransactionNo" ColumnName="TransactionNo" />
+                <ScalarProperty Name="ClaimNotSubmitted" ColumnName="ClaimNotSubmitted" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DeletedBreakUpNoes">
+            <EntityTypeMapping TypeName="ImprestModel.DeletedBreakUpNo">
+              <MappingFragment StoreEntitySet="DeletedBreakUpNo">
+                <ScalarProperty Name="BreakUpNo" ColumnName="BreakUpNo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DeletedTransactionNOes">
+            <EntityTypeMapping TypeName="ImprestModel.DeletedTransactionNO">
+              <MappingFragment StoreEntitySet="DeletedTransactionNO">
+                <ScalarProperty Name="TransactionNo" ColumnName="TransactionNo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="NarrationTransactions">
+            <EntityTypeMapping TypeName="ImprestModel.NarrationTransaction">
+              <MappingFragment StoreEntitySet="NarrationTransaction">
+                <ScalarProperty Name="TransactionNo" ColumnName="TransactionNo" />
+                <ScalarProperty Name="Narration" ColumnName="Narration" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ProjectTransactions">
+            <EntityTypeMapping TypeName="ImprestModel.ProjectTransaction">
+              <MappingFragment StoreEntitySet="ProjectTransaction">
+                <ScalarProperty Name="TransactionNo" ColumnName="TransactionNo" />
+                <ScalarProperty Name="ProjectNo" ColumnName="ProjectNo" />
+                <ScalarProperty Name="ProjectType" ColumnName="ProjectType" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="RecoupmentTransactions">
+            <EntityTypeMapping TypeName="ImprestModel.RecoupmentTransaction">
+              <MappingFragment StoreEntitySet="RecoupmentTransaction">
+                <ScalarProperty Name="TransactionNo" ColumnName="TransactionNo" />
+                <ScalarProperty Name="RecoupmentId" ColumnName="RecoupmentId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SupplierMasters">
+            <EntityTypeMapping TypeName="ImprestModel.SupplierMaster">
+              <MappingFragment StoreEntitySet="SupplierMasters">
+                <ScalarProperty Name="SupplierName" ColumnName="SupplierName" />
+                <ScalarProperty Name="TIN" ColumnName="TIN" />
+                <ScalarProperty Name="TAN" ColumnName="TAN" />
+                <ScalarProperty Name="PAN" ColumnName="PAN" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SupplierTransactions">
+            <EntityTypeMapping TypeName="ImprestModel.SupplierTransaction">
+              <MappingFragment StoreEntitySet="SupplierTransaction">
+                <ScalarProperty Name="TransactionNo" ColumnName="TransactionNo" />
+                <ScalarProperty Name="SupplierName" ColumnName="SupplierName" />
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TransactionMasters">
+            <EntityTypeMapping TypeName="ImprestModel.TransactionMaster">
+              <MappingFragment StoreEntitySet="TransactionMaster">
+                <ScalarProperty Name="TransactionNo" ColumnName="TransactionNo" />
+                <ScalarProperty Name="Amount" ColumnName="Amount" />
+                <ScalarProperty Name="credit" ColumnName="credit" />
+                <ScalarProperty Name="voucherId" ColumnName="voucherId" />
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="UpdatedOn" ColumnName="UpdatedOn" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="VoucherDateTransactions">
+            <EntityTypeMapping TypeName="ImprestModel.VoucherDateTransaction">
+              <MappingFragment StoreEntitySet="VoucherDateTransactions">
+                <ScalarProperty Name="TransactionNo" ColumnName="TransactionNo" />
+                <ScalarProperty Name="VoucherDate" ColumnName="VoucherDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="VoucherTypes">
+            <EntityTypeMapping TypeName="ImprestModel.VoucherType">
+              <MappingFragment StoreEntitySet="VoucherType">
+                <ScalarProperty Name="voucherId" ColumnName="voucherId" />
+                <ScalarProperty Name="voucherType1" ColumnName="voucherType" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AccountStatementViews">
+            <EntityTypeMapping TypeName="ImprestModel.AccountStatementView">
+              <MappingFragment StoreEntitySet="AccountStatementView">
+                <ScalarProperty Name="AccountTran" ColumnName="AccountTran" />
+                <ScalarProperty Name="PostingDate" ColumnName="PostingDate" />
+                <ScalarProperty Name="ValueDate" ColumnName="ValueDate" />
+                <ScalarProperty Name="Branch" ColumnName="Branch" />
+                <ScalarProperty Name="Descript" ColumnName="Descript" />
+                <ScalarProperty Name="RefChqN0" ColumnName="RefChqN0" />
+                <ScalarProperty Name="WithDrawals" ColumnName="WithDrawals" />
+                <ScalarProperty Name="Deposit" ColumnName="Deposit" />
+                <ScalarProperty Name="Balance" ColumnName="Balance" />
+                <ScalarProperty Name="AccountNo" ColumnName="AccountNo" />
+                <ScalarProperty Name="used" ColumnName="used" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TransactionReports">
+            <EntityTypeMapping TypeName="ImprestModel.TransactionReport">
+              <MappingFragment StoreEntitySet="TransactionReport">
+                <ScalarProperty Name="TransactionNo" ColumnName="TransactionNo" />
+                <ScalarProperty Name="Amount" ColumnName="Amount" />
+                <ScalarProperty Name="credit" ColumnName="credit" />
+                <ScalarProperty Name="voucherType" ColumnName="voucherType" />
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="UpdatedOn" ColumnName="UpdatedOn" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="BrsDone" ColumnName="BrsDone" />
+                <ScalarProperty Name="ChequeNo" ColumnName="ChequeNo" />
+                <ScalarProperty Name="ChequeDate" ColumnName="ChequeDate" />
+                <ScalarProperty Name="Narration" ColumnName="Narration" />
+                <ScalarProperty Name="ProjectNo" ColumnName="ProjectNo" />
+                <ScalarProperty Name="ProjectType" ColumnName="ProjectType" />
+                <ScalarProperty Name="SupplierName" ColumnName="SupplierName" />
+                <ScalarProperty Name="VoucherDate" ColumnName="VoucherDate" />
+                <ScalarProperty Name="AccountNo" ColumnName="AccountNo" />
+                <ScalarProperty Name="NotDeposited" ColumnName="NotDeposited" />
+                <ScalarProperty Name="VoucherIdInt" ColumnName="VoucherIdInt" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="OpenCloseBalances">
+            <EntityTypeMapping TypeName="ImprestModel.OpenCloseBalance">
+              <MappingFragment StoreEntitySet="OpenCloseBalance">
+                <ScalarProperty Name="closingBalance" ColumnName="closingBalance" />
+                <ScalarProperty Name="OpeningBalance" ColumnName="OpeningBalance" />
+                <ScalarProperty Name="TranDate" ColumnName="TranDate" />
+                <ScalarProperty Name="AccountNo" ColumnName="AccountNo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ComputeOpenCloseBals">
+            <EntityTypeMapping TypeName="ImprestModel.ComputeOpenCloseBal">
+              <MappingFragment StoreEntitySet="ComputeOpenCloseBal">
+                <ScalarProperty Name="Checked" ColumnName="Checked" />
+                <ScalarProperty Name="Trandate" ColumnName="Trandate" />
+                <ScalarProperty Name="AccountNo" ColumnName="AccountNo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
